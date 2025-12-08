@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Heart } from 'lucide-react'
+/// <reference types="vite/client" />
 
 interface NPCAvatarProps {
     size?: 'sm' | 'md' | 'lg'
@@ -12,7 +13,20 @@ function NPCAvatar({ size = 'md', className = '' }: NPCAvatarProps) {
     // Example: '/npc-avatar.png' or '/images/npc.png'
     const imagePath = '/TavernKeeper.png' // Change this to your image filename
 
+    // Get the base URL from Vite (handles both dev and production)
+    const baseUrl = (import.meta as any).env?.BASE_URL || '/'
+    const fullImagePath = baseUrl + imagePath.replace(/^\//, '')
+
     const [imageError, setImageError] = useState(false)
+
+    // Debug: Log the image path
+    useEffect(() => {
+        console.log('NPCAvatar loading image')
+        console.log('Base URL:', baseUrl)
+        console.log('Original path:', imagePath)
+        console.log('Full path:', fullImagePath)
+        console.log('Full URL would be:', window.location.origin + fullImagePath)
+    }, [baseUrl, fullImagePath])
 
     const sizeClasses = {
         sm: 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24',
@@ -35,10 +49,24 @@ function NPCAvatar({ size = 'md', className = '' }: NPCAvatarProps) {
 
     return (
         <img
-            src={imagePath}
+            src={fullImagePath}
             alt="NPC Avatar"
-            className={`${sizeClasses[size]} object-cover ${className}`}
-            onError={() => setImageError(true)}
+            className={`${sizeClasses[size]} object-contain ${className} relative z-50`}
+            onError={(e) => {
+                console.error('Failed to load avatar image:', fullImagePath)
+                console.error('Trying alternative path:', imagePath)
+                // Try the original path as fallback
+                if (e.currentTarget.src !== window.location.origin + imagePath) {
+                    e.currentTarget.src = imagePath
+                } else {
+                    console.error('Both paths failed, showing fallback icon')
+                    setImageError(true)
+                }
+            }}
+            onLoad={() => {
+                console.log('Avatar image loaded successfully:', fullImagePath)
+            }}
+            style={{ imageRendering: 'auto' }}
         />
     )
 }
