@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply min-h-screen;
+  }
+  
+  body {
+    @apply min-h-screen font-cozy;
+    background: linear-gradient(to bottom right, #faf7f3, #f5ede0, #e8d4b8);
+  }
+  
+  body {
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(230, 153, 0, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(166, 124, 82, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(139, 101, 68, 0.08) 0%, transparent 50%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(166, 124, 82, 0.02) 2px,
+        rgba(166, 124, 82, 0.02) 4px
+      );
+  }
+  
+  html.dark body {
+    background: linear-gradient(to bottom right, #1a0f0a, #2d1a12, #1a0f0a) !important;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(230, 153, 0, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(107, 42, 42, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(75, 30, 30, 0.06) 0%, transparent 50%) !important;
+  }
+  
+  html.dark #root {
+    background: linear-gradient(to bottom right, #1a0f0a, #2d1a12, #1a0f0a) !important;
+  }
+  
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-parchment-50 dark:bg-tavern-800 rounded-cozy shadow-tavern p-4 sm:p-6 transition-all duration-300 hover:shadow-cozy-lg border-2 border-tavern-300 dark:border-tavern-700;
+  }
+  
+  .btn-primary {
+    @apply bg-amber-500 dark:bg-amber-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-cozy font-medium hover:bg-amber-600 dark:hover:bg-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 text-sm sm:text-base;
+  }
+  
+  .btn-secondary {
+    @apply bg-tavern-200 dark:bg-tavern-700 text-tavern-800 dark:text-tavern-200 px-4 sm:px-6 py-2 sm:py-3 rounded-cozy font-medium hover:bg-tavern-300 dark:hover:bg-tavern-600 transition-all duration-200 shadow-md hover:shadow-lg text-sm sm:text-base;
+  }
+  
+  .btn-game {
+    @apply bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-cozy font-medium hover:from-amber-600 hover:to-amber-700 dark:hover:from-amber-700 dark:hover:to-amber-800 transition-all duration-200 shadow-tavern hover:shadow-cozy-lg transform hover:scale-105 active:scale-95 text-sm sm:text-base;
+  }
+  
+  .input-field {
+    @apply w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-tavern-300 dark:border-tavern-600 rounded-cozy focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-600 focus:border-amber-500 dark:focus:border-amber-600 bg-parchment-50 dark:bg-tavern-800 text-tavern-800 dark:text-tavern-200 transition-all text-sm sm:text-base;
+  }
+  
+  .textarea-field {
+    @apply w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-tavern-300 dark:border-tavern-600 rounded-cozy focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-600 focus:border-amber-500 dark:focus:border-amber-600 resize-none bg-parchment-50 dark:bg-tavern-800 text-tavern-800 dark:text-tavern-200 transition-all text-sm sm:text-base;
+  }
+  
+  .chat-bubble {
+    @apply bg-parchment-50 dark:bg-tavern-800 rounded-cozy-lg shadow-tavern p-5 border-2 border-tavern-300 dark:border-tavern-700 relative;
+  }
+  
+  .chat-bubble::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 1.5rem;
+    width: 0;
+    height: 0;
+    border-top: 0.5rem solid transparent;
+    border-right: 0.5rem solid rgb(166, 124, 82);
+    border-bottom: 0.5rem solid transparent;
+  }
+  
+  .dark .chat-bubble::before {
+    border-right-color: rgb(61, 42, 29);
+  }
+  
+  .chat-bubble::after {
+    content: '';
+    position: absolute;
+    left: -0.75rem;
+    top: 1.625rem;
+    width: 0;
+    height: 0;
+    border-top: 0.4375rem solid transparent;
+    border-right: 0.4375rem solid rgb(254, 252, 249);
+    border-bottom: 0.4375rem solid transparent;
+  }
+  
+  .dark .chat-bubble::after {
+    border-right-color: rgb(54, 58, 40);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
