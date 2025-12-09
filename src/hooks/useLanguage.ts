@@ -398,7 +398,7 @@ const translations: Record<Language, Translations> = {
                 ],
                 [
                     "Xin chào, bạn của Tôi! ✨",
-                    "Tôi rất vui vì bạn ở đây. Cần can đảm để tìm kiếm sự an ủi, và Tôi tự hào về bạn vì điều đó.",
+                    "Tôi rất vui vì bạn ở đây. Cần rất can đảm để tìm kiếm sự trợ giúp từ người khác, và Tôi tự hào về bạn vì điều đó.",
                     "Quán rượu này luôn mở cửa cho bạn. Nghỉ ngơi đi, người lữ khách. 💫"
                 ],
                 [
