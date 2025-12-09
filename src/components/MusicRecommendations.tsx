@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Music, RefreshCw } from 'lucide-react'
+import { useLanguage } from '../hooks/useLanguage'
 
 function MusicRecommendations() {
+    const { t } = useLanguage()
     // Hardcoded track IDs from your playlist
     // Add more track IDs here to randomly select from multiple songs
     // SECURITY NOTE: Track IDs are safe to hardcode - they're public information
@@ -198,10 +200,10 @@ function MusicRecommendations() {
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-400 to-amber-500 dark:from-amber-600 dark:to-amber-700 rounded-full flex items-center justify-center shadow-tavern flex-shrink-0">
                         <Music className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    Random Song 🎵
+                    {t.components.music.title}
                 </h2>
                 <p className="text-tavern-700 dark:text-tavern-300 mb-4 sm:mb-6 text-base sm:text-lg">
-                    Discover a random song from our curated playlist to help you relax, focus, or boost your mood. 🎶
+                    {t.components.music.description}
                 </p>
 
                 {/* Spotify Track Embed - Secure, no API calls needed */}
@@ -215,7 +217,7 @@ function MusicRecommendations() {
                                     title="Get another random song"
                                 >
                                     <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
-                                    <span>Another Song</span>
+                                    <span>{t.components.music.anotherSong}</span>
                                 </button>
                             </div>
                         )}

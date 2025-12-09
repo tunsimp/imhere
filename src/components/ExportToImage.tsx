@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Download, Upload, Camera, Loader2, Video, X, Circle } from 'lucide-react'
 import { storage } from '../utils/storage'
+import { useLanguage } from '../hooks/useLanguage'
 
 interface TodoItem {
     id: string
@@ -26,6 +27,7 @@ interface ThoughtEntry {
 }
 
 function ExportToImage() {
+    const { t } = useLanguage()
     const [selfie, setSelfie] = useState<string | null>(null)
     const [isGenerating, setIsGenerating] = useState(false)
     const [imageGenerated, setImageGenerated] = useState(false)
@@ -409,16 +411,16 @@ function ExportToImage() {
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 rounded-full flex items-center justify-center shadow-tavern flex-shrink-0">
                         <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <span className="break-words">Export to Image</span>
+                    <span className="break-words">{t.components.export.title}</span>
                 </h2>
                 <p className="text-tavern-700 dark:text-tavern-300 mb-6 text-base sm:text-lg">
-                    Create a beautiful snapshot of your wellness journey! Upload a selfie and combine it with your to-do list and thought log into a single image. 📸
+                    {t.components.export.description}
                 </p>
 
                 {/* Selfie Upload */}
                 <div className="mb-6">
                     <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                        Add Your Selfie
+                        {t.components.export.uploadSelfie}
                     </label>
                     <div className="space-y-4">
                         <div className="flex flex-wrap gap-3">
@@ -544,7 +546,7 @@ function ExportToImage() {
                         ) : (
                             <>
                                 <Camera className="w-5 h-5" />
-                                Generate Image
+                                {t.components.export.generateButton}
                             </>
                         )}
                     </button>
@@ -554,7 +556,7 @@ function ExportToImage() {
                         className={`btn-game flex items-center justify-center gap-2 ${!imageGenerated ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         <Download className="w-5 h-5" />
-                        Download Image
+                        {t.components.export.downloadButton}
                     </button>
                 </div>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Plus, Trash2, BookOpen, Calendar, Edit2, Check, X } from 'lucide-react'
 import { storage } from '../utils/storage'
+import { useLanguage } from '../hooks/useLanguage'
 
 interface ThoughtEntry {
     id: string
@@ -13,6 +14,7 @@ interface ThoughtEntry {
 }
 
 function ThoughtLog() {
+    const { t, language } = useLanguage()
     const [entries, setEntries] = useState<ThoughtEntry[]>([])
     const [newEntry, setNewEntry] = useState({
         thought: '',
@@ -93,17 +95,16 @@ function ThoughtLog() {
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-wine-500 to-wine-600 dark:from-wine-700 dark:to-wine-800 rounded-full flex items-center justify-center shadow-tavern flex-shrink-0">
                         <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    Thought Log
+                    {t.components.thoughts.title}
                 </h2>
                 <p className="text-tavern-700 dark:text-tavern-300 mb-4 sm:mb-6 text-base sm:text-lg">
-                    Record your thoughts and emotions. This helps you become more aware of patterns and
-                    triggers in your thinking. 📖
+                    {t.components.thoughts.description}
                 </p>
 
                 <div className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                            Select Date
+                            {t.components.thoughts.dateLabel}
                         </label>
                         <input
                             type="date"
@@ -115,7 +116,7 @@ function ThoughtLog() {
 
                     <div>
                         <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                            What thought are you having?
+                            {t.components.thoughts.thoughtLabel}
                         </label>
                         <textarea
                             value={newEntry.thought}
@@ -128,7 +129,7 @@ function ThoughtLog() {
 
                     <div>
                         <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                            What emotion are you feeling?
+                            {t.components.thoughts.emotionLabel}
                         </label>
                         <input
                             type="text"
@@ -141,7 +142,7 @@ function ThoughtLog() {
 
                     <div>
                         <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                            Intensity (1-10): {newEntry.intensity}
+                            {t.components.thoughts.intensityLabel}: {newEntry.intensity}
                         </label>
                         <input
                             type="range"
@@ -162,7 +163,7 @@ function ThoughtLog() {
 
                     <div>
                         <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                            Is there any evidence that this thought might not be true?
+                            {t.components.thoughts.evidenceLabel}
                         </label>
                         <textarea
                             value={newEntry.evidence}
@@ -178,7 +179,7 @@ function ThoughtLog() {
 
                     <button onClick={addEntry} className="btn-game flex items-center gap-2 w-full">
                         <Plus className="w-5 h-5" />
-                        Add Thought Entry
+                        {t.components.thoughts.addButton}
                     </button>
                 </div>
             </div>
@@ -187,7 +188,7 @@ function ThoughtLog() {
                 <h3 className="text-xl sm:text-2xl font-semibold text-tavern-800 dark:text-amber-200 mb-3 sm:mb-4 flex items-center gap-2">
                     <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                     <span className="break-words text-sm sm:text-base md:text-lg">
-                        Entries for {new Date(selectedDate).toLocaleDateString('en-US', {
+                        {t.components.thoughts.entriesFor} {new Date(selectedDate).toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US', {
                             weekday: 'long',
                             year: 'numeric',
                             month: 'long',
@@ -196,7 +197,7 @@ function ThoughtLog() {
                     </span>
                 </h3>
                 {dateEntries.length === 0 ? (
-                    <p className="text-tavern-600 dark:text-tavern-400 italic text-base sm:text-lg">No entries for this date yet. Start logging your thoughts! 💭</p>
+                    <p className="text-tavern-600 dark:text-tavern-400 italic text-base sm:text-lg">{t.components.thoughts.noEntries}</p>
                 ) : (
                     <div className="space-y-3 sm:space-y-4">
                         {dateEntries.map((entry) => (
@@ -290,7 +291,7 @@ function ThoughtLog() {
 
             {allEntries.length > dateEntries.length && (
                 <div className="card">
-                    <h3 className="text-xl font-semibold text-tavern-800 dark:text-amber-200 mb-4">All Entries</h3>
+                    <h3 className="text-xl font-semibold text-tavern-800 dark:text-amber-200 mb-4">{t.components.thoughts.allEntries}</h3>
                     <div className="space-y-4 max-h-96 overflow-y-auto">
                         {allEntries.map((entry) => (
                             <div

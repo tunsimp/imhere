@@ -13,10 +13,23 @@
     font-family: 'Cinzel', serif;
   }
   
+  html[lang="vi"] body {
+    font-family: 'Be Vietnam Pro', 'Inter', sans-serif;
+  }
+  
   h1, h2, h3, h4, h5, h6 {
     font-family: 'MedievalSharp', cursive;
     font-weight: 700;
     letter-spacing: 0.5px;
+  }
+  
+  html[lang="vi"] h1,
+  html[lang="vi"] h2,
+  html[lang="vi"] h3,
+  html[lang="vi"] h4,
+  html[lang="vi"] h5,
+  html[lang="vi"] h6 {
+    font-family: 'Be Vietnam Pro', 'Inter', sans-serif;
   }
   
   body {

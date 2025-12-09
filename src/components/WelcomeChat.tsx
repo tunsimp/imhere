@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { X, MessageCircle } from 'lucide-react'
 import NPCAvatar from './NPCAvatar'
+import { useLanguage } from '../hooks/useLanguage'
 
 interface WelcomeChatProps {
     onClose: () => void
 }
 
 function WelcomeChat({ onClose }: WelcomeChatProps) {
+    const { t } = useLanguage()
     const [displayedText, setDisplayedText] = useState('')
     const [isTyping, setIsTyping] = useState(false)
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
@@ -14,133 +16,7 @@ function WelcomeChat({ onClose }: WelcomeChatProps) {
     const autoCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
     // Array of welcoming/comforting messages - randomly pick one
-    const welcomeMessages = [
-        [
-            "Hello, traveler! 👋 Welcome to your cozy sanctuary.",
-            "I'm here to keep you company. You're not alone in this journey.",
-            "Take a deep breath. This is your safe space to rest and reflect. 💚"
-        ],
-        [
-            "Greetings, wanderer! 🌟",
-            "I see you've found your way here. Sometimes the path feels lonely, but remember - you're never truly alone.",
-            "Let's take this moment together, one step at a time. 🍺"
-        ],
-        [
-            "Hello there, friend! ✨",
-            "I'm glad you're here. It takes courage to seek comfort, and I'm proud of you for that.",
-            "This tavern is always open for you. Rest easy, traveler. 💫"
-        ],
-        [
-            "Welcome, weary traveler! 🏮",
-            "I can sense you might be feeling lonely or overwhelmed. That's okay - we all feel that way sometimes.",
-            "You've come to the right place. Let's find some peace together. 🌙"
-        ],
-        [
-            "Hey there! 👋",
-            "You're here, and that's what matters. Whether you're feeling lonely, anxious, or just need a moment of calm - I'm here for you.",
-            "This is your space. Take your time, be gentle with yourself. 💚"
-        ],
-        [
-            "Well met, kind soul! 🕯️",
-            "The fire's warm, and there's always room at this table for you.",
-            "No need to rush. Sit awhile, and let your worries drift away like smoke. 🍃"
-        ],
-        [
-            "Ah, a new face! Welcome, welcome! 🎭",
-            "I've been keeping this place warm, waiting for travelers like you.",
-            "You've made it here, and that's already a victory. Let's celebrate the small wins. 🎉"
-        ],
-        [
-            "Come in, come in! The door's always open. 🚪",
-            "I know the world outside can be harsh, but here? Here you're safe.",
-            "Take off your worries like a heavy cloak. You can pick them up later if you need to. 🧥"
-        ],
-        [
-            "Good to see you again, friend! 🌸",
-            "Or perhaps it's your first time? Either way, I'm glad you're here.",
-            "Every journey begins with a single step, and you've already taken it. Keep going. 💪"
-        ],
-        [
-            "The stars are bright tonight, traveler. ⭐",
-            "They remind me that even in darkness, there's always light to guide us.",
-            "You're stronger than you know. Let's discover that strength together. ✨"
-        ],
-        [
-            "Welcome back to your haven! 🏰",
-            "I've been thinking about you. Wondering how your journey's been.",
-            "Remember, it's okay to not be okay. That's why places like this exist. 💙"
-        ],
-        [
-            "Ah, there you are! I was hoping you'd visit. 🎪",
-            "Life can be overwhelming, can't it? But you don't have to face it alone.",
-            "Let's tackle today together, one gentle step at a time. 🦋"
-        ],
-        [
-            "Come sit by the hearth, traveler. 🔥",
-            "The flames dance and tell stories of resilience and hope.",
-            "Your story matters too. Let's write the next chapter together. 📖"
-        ],
-        [
-            "Well, well, look who's here! 👀",
-            "I've saved a special spot just for you. No reservations needed.",
-            "You deserve kindness, especially from yourself. Remember that. 💝"
-        ],
-        [
-            "Greetings from your friendly tavern keeper! 🍻",
-            "I've noticed you might be carrying some heavy thoughts today.",
-            "That's perfectly normal. Let's set them down for a while and breathe. 🌊"
-        ],
-        [
-            "Hello, brave soul! 🛡️",
-            "Coming here takes courage. Acknowledging you need support is brave.",
-            "I'm proud of you for taking care of yourself. That's not always easy. 🌺"
-        ],
-        [
-            "Welcome to your sanctuary, dear traveler! 🕊️",
-            "The world outside can wait. Right now, this moment belongs to you.",
-            "Let's find some calm together. You've got this. 🌿"
-        ],
-        [
-            "Ahoy there! ⚓",
-            "I see you've navigated through rough waters to get here.",
-            "The storm will pass. Until then, this tavern is your safe harbor. ⛵"
-        ],
-        [
-            "Good day, friend! ☀️",
-            "Whether it's morning, noon, or night - you're always welcome here.",
-            "Take a moment to appreciate how far you've come. You're doing great. 🌈"
-        ],
-        [
-            "Welcome, welcome! Pull up a chair. 🪑",
-            "I've been keeping watch, making sure this place stays warm and welcoming.",
-            "You're not a burden. You're a person who deserves care and comfort. 💐"
-        ],
-        [
-            "Hello, kindred spirit! 🤝",
-            "I can see you've been through a lot. Your strength shows.",
-            "But even the strongest travelers need rest. Let this be your rest stop. 🏕️"
-        ],
-        [
-            "Well met on this fine day! 🌻",
-            "Every day you show up is a victory, even if it doesn't feel like it.",
-            "Small steps forward are still progress. Let's celebrate that. 🎊"
-        ],
-        [
-            "Come in from the cold, traveler! 🧣",
-            "I've stoked the fire and prepared a warm welcome just for you.",
-            "You don't have to have it all figured out. That's what I'm here for. 🤗"
-        ],
-        [
-            "Ah, a familiar face! Or perhaps new? Either way, welcome! 🎨",
-            "This place exists for moments like this - when you need a pause.",
-            "Take all the time you need. There's no rush here. ⏳"
-        ],
-        [
-            "Greetings, fellow wanderer! 🗺️",
-            "The path you're on isn't always easy, but you're walking it anyway.",
-            "That persistence? That's your superpower. Let's use it wisely. 🦸"
-        ]
-    ]
+    const welcomeMessages = t.welcomeChat.messages
 
     // Randomly select a message set
     const [selectedMessages] = useState(() => {

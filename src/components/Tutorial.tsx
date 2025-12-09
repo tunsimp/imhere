@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { ArrowRight, MessageCircle, FastForward } from 'lucide-react'
 import NPCAvatar from './NPCAvatar'
+import { useLanguage } from '../hooks/useLanguage'
 
 type Tab = 'gratitude' | 'schedule' | 'coping' | 'thoughts' | 'export' | 'music'
 
@@ -9,143 +10,22 @@ interface TutorialProps {
     onClose: () => void
 }
 
-// Tab-specific tutorial content
-const tabTutorials: Record<Tab, Array<{ messages: Array<{ id: number; text: string; type: 'npc' }> }>> = {
-    gratitude: [
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Hey, I'm so glad you're here! ✨",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "You know what? Sometimes the best thing we can do is just pause and notice the good stuff. Even the tiny things count.",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "When you're ready, just write down what you're grateful for today. No pressure - it's just between you and me. 😊",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-    ],
-    schedule: [
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Hey there! 📅",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "I know life can get overwhelming sometimes. That's why I thought we could plan things out together, one step at a time.",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Write down what you need to do, and when you finish something, check it off. Trust me, that feeling? It's pretty satisfying! ✅",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-    ],
-    coping: [
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Hey, are you doing okay? 💚",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "When things feel heavy, I've got some techniques that might help. Breathing exercises, grounding stuff - things that have helped others.",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Try them out and see what feels right for you. Everyone's different, and that's totally okay. I'm here with you.",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-    ],
-    thoughts: [
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Hey, I see you're here. 📖",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "Sometimes our thoughts can be really loud, you know? When that happens, it helps to write them down - get them out of your head.",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Then, maybe we can look at them together. Ask yourself: 'Is this thought really true?' Sometimes our minds play tricks on us. 🕵️",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-    ],
-    music: [
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Hey! Want to listen to something? 🎵",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "I've got some songs here that might help - whether you need to relax, focus, or just feel a bit better.",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Just hit 'Another Song' if you want something different. Music can be pretty powerful, you know? 🎶",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-    ],
-    export: [
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Hey! 📸",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "Want to save what you've written? Or maybe share it with someone? You can turn your entries into an image right here.",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "It's nice to look back sometimes, you know? See how far you've come. 💫",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-    ],
-}
-
 function Tutorial({ tab, onClose }: TutorialProps) {
+    const { t } = useLanguage()
     const [currentStep, setCurrentStep] = useState(0)
     const [displayedText, setDisplayedText] = useState('')
     const [isTyping, setIsTyping] = useState(false)
     const typingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-    const conversations = tabTutorials[tab] || []
+    // Convert translation arrays to the format expected by the component
+    const messages = t.tutorial[tab] || []
+    const conversations = [{
+        messages: messages.map((text: string, index: number) => ({
+            id: index,
+            text,
+            type: 'npc' as const,
+        }))
+    }]
 
     const currentConversation = conversations[currentStep]
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
@@ -232,7 +112,7 @@ function Tutorial({ tab, onClose }: TutorialProps) {
                             <NPCAvatar size="md" />
                         </div>
                         <div className="mt-2 text-center">
-                            <p className="text-xs sm:text-sm font-medium text-white">Tavern Keeper</p>
+                            <p className="text-xs sm:text-sm font-medium text-white">{t.tutorial.tavernKeeper}</p>
                         </div>
                     </div>
 
@@ -248,8 +128,8 @@ function Tutorial({ tab, onClose }: TutorialProps) {
                                     skipAnimation()
                                 }}
                                 className="absolute top-2 right-2 p-1.5 rounded-cozy bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-800 transition-all opacity-0 group-hover:opacity-100 shadow-md z-10"
-                                title="Skip animation (or click anywhere on the bubble)"
-                                aria-label="Skip animation"
+                                title={t.tutorial.skipAnimation}
+                                aria-label={t.tutorial.skipAnimation}
                             >
                                 <FastForward className="w-4 h-4" />
                             </button>
@@ -267,7 +147,7 @@ function Tutorial({ tab, onClose }: TutorialProps) {
                                         </p>
                                         {isTyping && (
                                             <p className="text-xs text-tavern-600 dark:text-tavern-400 mt-2 italic">
-                                                Click to skip animation
+                                                {t.tutorial.clickToSkip}
                                             </p>
                                         )}
                                     </div>
@@ -304,19 +184,19 @@ function Tutorial({ tab, onClose }: TutorialProps) {
                         onClick={handleSkip}
                         className="text-white hover:text-amber-200 dark:hover:text-amber-300 font-medium px-4 py-2 rounded-cozy transition-colors text-sm sm:text-base order-2 sm:order-1"
                     >
-                        Skip Tutorial
+                        {t.tutorial.skipTutorial}
                     </button>
                     <button
                         onClick={handleContinue}
                         className="btn-game flex items-center justify-center gap-2 order-1 sm:order-2"
                     >
                         {isTyping
-                            ? 'Skip Animation'
+                            ? t.tutorial.skipAnimation
                             : currentMessageIndex < currentConversation.messages.length - 1
-                                ? 'Continue'
+                                ? t.tutorial.continue
                                 : currentStep < conversations.length - 1
-                                    ? 'Next'
-                                    : 'Got it!'}
+                                    ? t.tutorial.next
+                                    : t.tutorial.gotIt}
                         {isTyping ? (
                             <FastForward className="w-4 h-4 sm:w-5 sm:h-5" />
                         ) : (

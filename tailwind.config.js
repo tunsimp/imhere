@@ -90,7 +90,9 @@ export default {
       },
       fontFamily: {
         cozy: ['"Cinzel"', 'serif'],
+        cozyVi: ['"Be Vietnam Pro"', '"Inter"', 'sans-serif'],
         tavern: ['"MedievalSharp"', 'cursive'],
+        tavernVi: ['"Be Vietnam Pro"', '"Inter"', 'sans-serif'],
         pixel: ['"Press Start 2P"', 'monospace'],
       },
       borderRadius: {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Plus, Trash2, Check, Calendar, Clock } from 'lucide-react'
 import { storage } from '../utils/storage'
+import { useLanguage } from '../hooks/useLanguage'
 
 interface TodoItem {
     id: string
@@ -16,6 +17,7 @@ interface ScheduleItem {
 }
 
 function DailySchedule() {
+    const { t } = useLanguage()
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
     const [todos, setTodos] = useState<TodoItem[]>([])
     const [schedule, setSchedule] = useState<ScheduleItem[]>([])
@@ -88,15 +90,15 @@ function DailySchedule() {
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-copper-400 to-copper-500 dark:from-copper-600 dark:to-copper-700 rounded-full flex items-center justify-center shadow-tavern flex-shrink-0">
                         <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <span className="break-words">Daily Schedule & To-Do List</span>
+                    <span className="break-words">{t.components.schedule.title}</span>
                 </h2>
                 <p className="text-tavern-700 dark:text-tavern-300 mb-4 sm:mb-6 text-base sm:text-lg">
-                    Plan your day and track your tasks. Stay organized and accomplish your goals! 📋
+                    {t.components.schedule.description}
                 </p>
 
                 <div className="mb-6">
                     <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                        Select Date
+                        {t.components.schedule.selectDate}
                     </label>
                     <input
                         type="date"
@@ -113,7 +115,7 @@ function DailySchedule() {
                         <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-forest-400 to-forest-500 dark:from-forest-600 dark:to-forest-700 rounded-full flex items-center justify-center flex-shrink-0">
                             <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                         </div>
-                        <span className="break-words">To-Do List ({completedCount}/{todos.length})</span>
+                        <span className="break-words">{t.components.schedule.todoSection} ({completedCount}/{todos.length})</span>
                     </h3>
 
                     <div className="mb-4">
@@ -128,7 +130,7 @@ function DailySchedule() {
                             />
                             <button onClick={addTodo} className="btn-game flex items-center gap-2">
                                 <Plus className="w-5 h-5" />
-                                Add
+                                {t.components.schedule.addTodo}
                             </button>
                         </div>
                     </div>
@@ -174,7 +176,7 @@ function DailySchedule() {
                         <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-copper-400 to-copper-500 dark:from-copper-600 dark:to-copper-700 rounded-full flex items-center justify-center flex-shrink-0">
                             <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                         </div>
-                        Daily Schedule
+                        {t.components.schedule.scheduleSection}
                     </h3>
 
                     <div className="mb-4 space-y-2">
@@ -198,13 +200,13 @@ function DailySchedule() {
                             />
                             <button onClick={addScheduleItem} className="btn-game flex items-center gap-2">
                                 <Plus className="w-5 h-5" />
-                                Add
+                                {t.components.schedule.addSchedule}
                             </button>
                         </div>
                     </div>
 
                     {schedule.length === 0 ? (
-                        <p className="text-tavern-600 dark:text-tavern-400 italic text-lg">No schedule items yet. Plan your day! ⏰</p>
+                        <p className="text-tavern-600 dark:text-tavern-400 italic text-lg">{t.components.schedule.noSchedule}</p>
                     ) : (
                         <div className="space-y-2">
                             {schedule.map((item) => (

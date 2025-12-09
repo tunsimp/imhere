@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Plus, Trash2, Sparkles } from 'lucide-react'
 import { storage } from '../utils/storage'
+import { useLanguage } from '../hooks/useLanguage'
 
 interface GratitudeEntry {
     id: string
@@ -9,6 +10,7 @@ interface GratitudeEntry {
 }
 
 function GratitudeJournal() {
+    const { t } = useLanguage()
     const [entries, setEntries] = useState<GratitudeEntry[]>([])
     const [newEntry, setNewEntry] = useState('')
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
@@ -51,17 +53,16 @@ function GratitudeJournal() {
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-400 to-amber-500 dark:from-amber-600 dark:to-amber-700 rounded-full flex items-center justify-center shadow-tavern flex-shrink-0">
                         <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    Gratitude Journal
+                    {t.components.gratitude.title}
                 </h2>
                 <p className="text-tavern-700 dark:text-tavern-300 mb-4 sm:mb-6 text-base sm:text-lg">
-                    Take a moment to reflect on what you're grateful for today. Writing down things you're
-                    thankful for can improve your mood and overall well-being. ✨
+                    {t.components.gratitude.description}
                 </p>
 
                 <div className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                            Select Date
+                            {t.components.gratitude.dateLabel}
                         </label>
                         <input
                             type="date"
@@ -73,7 +74,7 @@ function GratitudeJournal() {
 
                     <div>
                         <label className="block text-sm font-medium text-tavern-700 dark:text-tavern-300 mb-2">
-                            What are you grateful for?
+                            {t.components.gratitude.entryLabel}
                         </label>
                         <div className="flex gap-2">
                             <input
@@ -86,7 +87,7 @@ function GratitudeJournal() {
                             />
                             <button onClick={addEntry} className="btn-game flex items-center gap-2">
                                 <Plus className="w-5 h-5" />
-                                Add
+                                {t.components.gratitude.addButton}
                             </button>
                         </div>
                     </div>
@@ -95,10 +96,10 @@ function GratitudeJournal() {
 
             <div className="card">
                 <h3 className="text-xl sm:text-2xl font-semibold text-tavern-800 dark:text-amber-200 mb-3 sm:mb-4">
-                    Today's Gratitudes ({todayEntries.length})
+                    {t.components.gratitude.todayGratitudes} ({todayEntries.length})
                 </h3>
                 {todayEntries.length === 0 ? (
-                    <p className="text-tavern-600 dark:text-tavern-400 italic text-base sm:text-lg">No entries for this date yet. Start collecting moments of gratitude! 🌟</p>
+                    <p className="text-tavern-600 dark:text-tavern-400 italic text-base sm:text-lg">{t.components.gratitude.noEntries}</p>
                 ) : (
                     <div className="space-y-2 sm:space-y-3">
                         {todayEntries.map((entry) => (
@@ -121,7 +122,7 @@ function GratitudeJournal() {
 
             {allEntries.length > todayEntries.length && (
                 <div className="card">
-                    <h3 className="text-xl sm:text-2xl font-semibold text-tavern-800 dark:text-amber-200 mb-3 sm:mb-4">All Entries</h3>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-tavern-800 dark:text-amber-200 mb-3 sm:mb-4">{t.components.gratitude.allEntries}</h3>
                     <div className="space-y-2 sm:space-y-3 max-h-96 overflow-y-auto">
                         {allEntries.map((entry) => (
                             <div

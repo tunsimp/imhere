@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Heart, Lightbulb, Wind, Music, Book, Activity } from 'lucide-react'
+import { useLanguage } from '../hooks/useLanguage'
 
 interface CopingStrategy {
     id: string
@@ -10,6 +11,7 @@ interface CopingStrategy {
 }
 
 function CopingStrategies() {
+    const { t } = useLanguage()
     const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
     const strategies: CopingStrategy[] = [
@@ -96,7 +98,7 @@ function CopingStrategies() {
     ]
 
     const categories = [
-        { id: 'all', label: 'All Strategies' },
+        { id: 'all', label: t.components.coping.allCategories },
         { id: 'breathing', label: 'Breathing' },
         { id: 'grounding', label: 'Grounding' },
         { id: 'physical', label: 'Physical' },
@@ -117,11 +119,10 @@ function CopingStrategies() {
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-wine-400 to-wine-500 dark:from-wine-600 dark:to-wine-700 rounded-full flex items-center justify-center shadow-tavern flex-shrink-0">
                         <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <span className="break-words">Mental Health Coping Strategies</span>
+                    <span className="break-words">{t.components.coping.title}</span>
                 </h2>
                 <p className="text-tavern-700 dark:text-tavern-300 mb-4 sm:mb-6 text-base sm:text-lg">
-                    When you're feeling overwhelmed, anxious, or stressed, try these evidence-based coping
-                    strategies. Find what works best for you! 💚
+                    {t.components.coping.description}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
@@ -161,7 +162,7 @@ function CopingStrategies() {
 
             {filteredStrategies.length === 0 && (
                 <div className="card text-center py-12">
-                    <p className="text-tavern-600 dark:text-tavern-400 text-lg">No strategies found in this category. Try another one! 🌟</p>
+                    <p className="text-tavern-600 dark:text-tavern-400 text-lg">{t.components.coping.noStrategies}</p>
                 </div>
             )}
         </div>

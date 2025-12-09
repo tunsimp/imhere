@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Heart, Calendar, BookOpen, Sparkles, Moon, Sun, Camera, Music } from 'lucide-react'
+import { Heart, Calendar, BookOpen, Sparkles, Moon, Sun, Camera, Music, Languages } from 'lucide-react'
 import GratitudeJournal from './components/GratitudeJournal'
 import DailySchedule from './components/DailySchedule'
 import CopingStrategies from './components/CopingStrategies'
@@ -11,6 +11,7 @@ import WelcomeChat from './components/WelcomeChat'
 import NPCAvatar from './components/NPCAvatar'
 import AnimatedBackground from './components/AnimatedBackground'
 import { useTheme } from './hooks/useTheme'
+import { useLanguage } from './hooks/useLanguage'
 
 type Tab = 'gratitude' | 'schedule' | 'coping' | 'thoughts' | 'export' | 'music'
 
@@ -20,6 +21,7 @@ function App() {
     const [tutorialTab, setTutorialTab] = useState<Tab>('gratitude')
     const [showWelcomeChat, setShowWelcomeChat] = useState(false)
     const { isDark, toggleTheme } = useTheme()
+    const { language, toggleLanguage, t } = useLanguage()
 
     // Check if tutorial for a specific tab has been seen
     const hasSeenTabTutorial = (tab: Tab): boolean => {
@@ -49,12 +51,12 @@ function App() {
     }, [])
 
     const tabs = [
-        { id: 'gratitude' as Tab, label: 'Gratitude', icon: Sparkles },
-        { id: 'schedule' as Tab, label: 'Schedule', icon: Calendar },
-        { id: 'coping' as Tab, label: 'Coping', icon: Heart },
-        { id: 'thoughts' as Tab, label: 'Thought Log', icon: BookOpen },
-        { id: 'music' as Tab, label: 'Music', icon: Music },
-        { id: 'export' as Tab, label: 'Export', icon: Camera },
+        { id: 'gratitude' as Tab, label: t.tabs.gratitude, icon: Sparkles },
+        { id: 'schedule' as Tab, label: t.tabs.schedule, icon: Calendar },
+        { id: 'coping' as Tab, label: t.tabs.coping, icon: Heart },
+        { id: 'thoughts' as Tab, label: t.tabs.thoughts, icon: BookOpen },
+        { id: 'music' as Tab, label: t.tabs.music, icon: Music },
+        { id: 'export' as Tab, label: t.tabs.export, icon: Camera },
     ]
 
     return (
@@ -88,11 +90,19 @@ function App() {
                             <div className="flex-1 min-w-0">
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-tavern-800 dark:text-amber-200 flex items-center gap-2 sm:gap-3">
                                     <NPCAvatar size="sm" className="flex-shrink-0" />
-                                    <span className="truncate">I'm Here</span>
+                                    <span className="truncate">{t.app.title}</span>
                                 </h1>
-                                <p className="text-tavern-700 dark:text-tavern-300 mt-1 text-sm sm:text-base md:text-lg">Your cozy tavern companion 🍺</p>
+                                <p className="text-tavern-700 dark:text-tavern-300 mt-1 text-sm sm:text-base md:text-lg">{t.app.subtitle}</p>
                             </div>
                             <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                                <button
+                                    onClick={toggleLanguage}
+                                    className="p-2 rounded-cozy bg-tavern-200 dark:bg-tavern-700 text-tavern-800 dark:text-amber-200 hover:bg-tavern-300 dark:hover:bg-tavern-600 transition-colors flex-shrink-0"
+                                    aria-label="Toggle language"
+                                    title={language === 'en' ? 'Tiếng Việt' : 'English'}
+                                >
+                                    <Languages className="w-5 h-5" />
+                                </button>
                                 <button
                                     onClick={toggleTheme}
                                     className="p-2 rounded-cozy bg-tavern-200 dark:bg-tavern-700 text-tavern-800 dark:text-amber-200 hover:bg-tavern-300 dark:hover:bg-tavern-600 transition-colors flex-shrink-0"
@@ -108,8 +118,8 @@ function App() {
                                     className="btn-game flex items-center gap-2 flex-1 sm:flex-initial text-sm sm:text-base px-3 sm:px-6 py-2 sm:py-3"
                                 >
                                     <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
-                                    <span className="hidden sm:inline">Show Tutorial</span>
-                                    <span className="sm:hidden">Tutorial</span>
+                                    <span className="hidden sm:inline">{t.app.showTutorial}</span>
+                                    <span className="sm:hidden">{t.app.tutorial}</span>
                                 </button>
                             </div>
                         </div>
@@ -121,7 +131,7 @@ function App() {
                         <div className="flex justify-center items-center overflow-x-auto scrollbar-hide gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 py-2 sm:py-3 md:py-4">
                             {tabs.map((tab) => {
                                 const Icon = tab.icon
-                                const shortLabel = tab.label === 'Thought Log' ? 'Thoughts' : tab.label
+                                const shortLabel = tab.id === 'thoughts' ? (language === 'vi' ? 'Suy Nghĩ' : 'Thoughts') : tab.label
                                 return (
                                     <button
                                         key={tab.id}
