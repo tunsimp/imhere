@@ -591,7 +591,9 @@ export function useLanguage() {
     }, [language])
 
     const toggleLanguage = () => {
-        setLanguage(prev => prev === 'en' ? 'vi' : 'en')
+        const newLanguage = language === 'en' ? 'vi' : 'en'
+        localStorage.setItem('language', newLanguage)
+        window.location.reload()
     }
 
     const t = translations[language]
