@@ -571,7 +571,7 @@ const translations: Record<Language, Translations> = {
 }
 
 export function useLanguage() {
-    const [language, setLanguage] = useState<Language>(() => {
+    const [language] = useState<Language>(() => {
         const saved = localStorage.getItem('language')
         if (saved && (saved === 'en' || saved === 'vi')) {
             return saved as Language
