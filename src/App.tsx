@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Heart, Calendar, BookOpen, Sparkles, Moon, Sun, Camera } from 'lucide-react'
+import { Heart, Calendar, BookOpen, Sparkles, Moon, Sun, Camera, Music } from 'lucide-react'
 import GratitudeJournal from './components/GratitudeJournal'
 import DailySchedule from './components/DailySchedule'
 import CopingStrategies from './components/CopingStrategies'
 import ThoughtLog from './components/ThoughtLog'
 import ExportToImage from './components/ExportToImage'
+import MusicRecommendations from './components/MusicRecommendations'
 import Tutorial from './components/Tutorial'
+import WelcomeChat from './components/WelcomeChat'
 import NPCAvatar from './components/NPCAvatar'
 import AnimatedBackground from './components/AnimatedBackground'
 import { useTheme } from './hooks/useTheme'
 
-type Tab = 'gratitude' | 'schedule' | 'coping' | 'thoughts' | 'export'
+type Tab = 'gratitude' | 'schedule' | 'coping' | 'thoughts' | 'export' | 'music'
 
 function App() {
     const [activeTab, setActiveTab] = useState<Tab>('gratitude')
     const [showTutorial, setShowTutorial] = useState(false)
+    const [showWelcomeChat, setShowWelcomeChat] = useState(false)
     const { isDark, toggleTheme } = useTheme()
 
     useEffect(() => {
@@ -24,11 +27,21 @@ function App() {
         }
     }, [])
 
+    useEffect(() => {
+        // Show welcome chat after a short delay when page loads
+        const timer = setTimeout(() => {
+            setShowWelcomeChat(true)
+        }, 500) // Small delay to let page render first
+
+        return () => clearTimeout(timer)
+    }, [])
+
     const tabs = [
         { id: 'gratitude' as Tab, label: 'Gratitude', icon: Sparkles },
         { id: 'schedule' as Tab, label: 'Schedule', icon: Calendar },
         { id: 'coping' as Tab, label: 'Coping', icon: Heart },
         { id: 'thoughts' as Tab, label: 'Thought Log', icon: BookOpen },
+        { id: 'music' as Tab, label: 'Music', icon: Music },
         { id: 'export' as Tab, label: 'Export', icon: Camera },
     ]
 
@@ -36,8 +49,7 @@ function App() {
         <div className="min-h-screen relative">
             {/* Animated blurred background */}
             <AnimatedBackground
-                src="/bg.gif" // Files in public folder are referenced with /filename
-                type="gif" // Change to "video" if using MP4/WebM
+                isDark={isDark}
             />
 
             {/* Content overlay - almost transparent to show background GIF */}
@@ -50,12 +62,19 @@ function App() {
                         }}
                     />
                 )}
+                {showWelcomeChat && !showTutorial && (
+                    <WelcomeChat
+                        onClose={() => {
+                            setShowWelcomeChat(false)
+                        }}
+                    />
+                )}
                 <header className="bg-parchment-50 dark:bg-tavern-900 shadow-tavern sticky top-0 z-50 border-b-4 border-tavern-400 dark:border-tavern-700">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                             <div className="flex-1 min-w-0">
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-tavern-800 dark:text-amber-200 flex items-center gap-2 sm:gap-3">
-                                    <NPCAvatar size="sm" className="flex-shrink-0 shadow-tavern" />
+                                    <NPCAvatar size="sm" className="flex-shrink-0" />
                                     <span className="truncate">I'm Here</span>
                                 </h1>
                                 <p className="text-tavern-700 dark:text-tavern-300 mt-1 text-sm sm:text-base md:text-lg">Your cozy tavern companion 🍺</p>
@@ -111,6 +130,7 @@ function App() {
                     {activeTab === 'schedule' && <DailySchedule />}
                     {activeTab === 'coping' && <CopingStrategies />}
                     {activeTab === 'thoughts' && <ThoughtLog />}
+                    {activeTab === 'music' && <MusicRecommendations />}
                     {activeTab === 'export' && <ExportToImage />}
                 </main>
             </div>

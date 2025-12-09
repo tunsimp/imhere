@@ -10,6 +10,13 @@
   body {
     @apply min-h-screen font-cozy;
     background: linear-gradient(to bottom right, #faf7f3, #f5ede0, #e8d4b8);
+    font-family: 'Cinzel', serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'MedievalSharp', cursive;
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
   
   body {

@@ -66,7 +66,11 @@ function NPCAvatar({ size = 'md', className = '' }: NPCAvatarProps) {
             onLoad={() => {
                 console.log('Avatar image loaded successfully:', fullImagePath)
             }}
-            style={{ imageRendering: 'auto' }}
+            style={{
+                imageRendering: 'auto',
+                background: 'transparent',
+                mixBlendMode: 'normal'
+            }}
         />
     )
 }

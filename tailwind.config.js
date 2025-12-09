@@ -89,7 +89,8 @@ export default {
         }
       },
       fontFamily: {
-        cozy: ['"Comfortaa"', 'cursive'],
+        cozy: ['"Cinzel"', 'serif'],
+        tavern: ['"MedievalSharp"', 'cursive'],
         pixel: ['"Press Start 2P"', 'monospace'],
       },
       borderRadius: {

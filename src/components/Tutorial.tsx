@@ -207,7 +207,7 @@ function Tutorial({ onClose }: { onClose: () => void }) {
                 <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 mb-4">
                     <div className="flex-shrink-0 mx-auto sm:mx-0">
                         <div className="transform hover:scale-110 transition-transform">
-                            <NPCAvatar size="md" className="shadow-tavern" />
+                            <NPCAvatar size="md" />
                         </div>
                         <div className="mt-2 text-center">
                             <p className="text-xs sm:text-sm font-medium text-white">Tavern Keeper</p>
