@@ -398,7 +398,7 @@ const translations: Record<Language, Translations> = {
                 ],
                 [
                     "Xin chào, bạn của Tôi! ✨",
-                    "Tôi rất vui vì bạn ở đây. Cần rất can đảm để tìm kiếm sự trợ giúp từ người khác, và Tôi tự hào về bạn vì điều đó.",
+                    "Tôi rất vui vì bạn ở đây. Cần rất nhiều can đảm để tìm kiếm sự trợ giúp từ người khác, và Tôi tự hào về bạn vì điều đó.",
                     "Quán rượu này luôn mở cửa cho bạn. Nghỉ ngơi đi, người lữ khách. 💫"
                 ],
                 [
@@ -412,7 +412,7 @@ const translations: Record<Language, Translations> = {
                     "Đây là không gian của bạn. Hãy dành thời gian, đối xử nhẹ nhàng với chính Tôi. 💚"
                 ],
                 [
-                    "Gặp gỡ tốt đẹp, tâm hồn tử tế! 🕯️",
+                    "Rất vui được gặp cậu, tâm hồn tử tế! 🕯️",
                     "Lửa đang ấm, và luôn có chỗ ở bàn này cho bạn.",
                     "Không cần vội vàng. Ngồi một lúc, và để những lo lắng của bạn trôi đi như mây. 🍃"
                 ],
@@ -429,7 +429,7 @@ const translations: Record<Language, Translations> = {
                 [
                     "Rất vui được gặp lại bạn, bạn của Tôi! 🌸",
                     "Hoặc có lẽ đây là lần đầu tiên của bạn? Dù sao đi nữa, Tôi rất vui vì bạn ở đây.",
-                    "Mọi hành trình đều bắt đầu bằng một bước chân, và bạn đã thực hiện nó rồi. Tiếp tục cố gắng nhé. 💪"
+                    "Mọi hành trình đều bắt đầu từ đâu đó, và bạn đang thực hiện nó rồi. Tiếp tục cố gắng nhé. 💪"
                 ],
                 [
                     "Những ngôi sao đêm nay sáng rực nhỉ, người lữ khách? ⭐",
@@ -439,7 +439,7 @@ const translations: Record<Language, Translations> = {
                 [
                     "Chào mừng trở lại nơi trú ẩn của bạn! 🏰",
                     "Tôi đã nghĩ về bạn. Tự hỏi hành trình của bạn như thế nào.",
-                    "Hãy nhớ, không sao nếu không ổn. Đó là lý do những nơi như thế này tồn tại. 💙"
+                    "Hãy nhớ, không sao nếu mọi thứ không ổn. Đó là lý do mà tôi xây dựng nên quán rượu này. 💙"
                 ],
                 [
                     "Ồ, bạn đây rồi! Tôi đã hy vọng bạn sẽ ghé thăm. 🎪",
@@ -463,12 +463,12 @@ const translations: Record<Language, Translations> = {
                 ],
                 [
                     "Xin chào, tâm hồn dũng cảm! 🛡️",
-                    "Đến đây cần can đảm. Thừa nhận bạn cần hỗ trợ là dũng cảm.",
+                    "Đến đây cần rất nhiều can đảm. Thừa nhận bạn cần sự hỗ trợ cũng rất dũng cảm.",
                     "Tôi tự hào về bạn vì đã chăm sóc bản thân. Điều đó không phải lúc nào cũng dễ dàng. 🌺"
                 ],
                 [
                     "Chào mừng đến nơi trú ẩn của bạn, người lữ khách thân yêu! 🕊️",
-                    "Thế giới bên ngoài có thể đợi. Ngay bây giờ, khoảnh khắc này thuộc về bạn.",
+                    "Thế giới ngoài kia có thể đợi. Bây giờ, hãy dành khoảnh khắc này cho riêng bạn.",
                     "Hãy làm cho nó có ý nghĩa, cùng nhau. 🌿"
                 ],
                 [
@@ -479,12 +479,12 @@ const translations: Record<Language, Translations> = {
                 [
                     "Chào mừng, bạn của Tôi! Tôi có nước ấm này. ☕",
                     "Có điều gì đó ấm áp về món chocolate ấm và một không gian an toàn, bạn có nghĩ vậy không?",
-                    "Hãy dành thời gian. Không cần vội vàng ở đây. 🍵"
+                    "Hãy dành thời gian thoải mái nhé. Không cần vội vàng đâu. 🍵"
                 ],
                 [
                     "Xin chào! 🌈",
-                    "Tôi thấy bạn đã tìm đường đến góc nhỏ của sự bình yên này.",
-                    "Đôi khi tất cả chúng ta đều cần một khoảnh khắc để chỉ... được là chính Tôi. Đây là của bạn. 🌸"
+                    "Bạn đã tìm đường đến quán rượu nhỏ này.",
+                    "Đôi khi tất cả chúng ta đều cần một khoảnh khắc để chỉ... được là chính mình. 🌸"
                 ],
                 [
                     "Chào mừng, người lữ khách! 🗺️",
@@ -504,11 +504,11 @@ const translations: Record<Language, Translations> = {
                 [
                     "Chào mừng trở lại, người thân yêu! 💜",
                     "Tôi hy vọng hôm nay đối xử tốt với bạn. Nếu không, chúng ta có thể cùng nhau vượt qua.",
-                    "Bạn không bao giờ cô đơn trong điều này. Hãy nhớ điều đó. 🌟"
+                    "Bạn không bao giờ cô đơn đâu. Hãy nhớ điều đó. 🌟"
                 ],
                 [
                     "Xin chào, tâm hồn xinh đẹp! ✨",
-                    "Tôi rất vui vì bạn đã dành thời gian cho chính Tôi hôm nay. Điều đó quan trọng.",
+                    "Tôi rất vui vì bạn đã dành thời gian cho chính mình hôm nay. Điều đó quan trọng.",
                     "Hãy làm cho khoảnh khắc này có ý nghĩa. Bạn làm được mà. 💪"
                 ],
             ],
