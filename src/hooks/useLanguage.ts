@@ -35,6 +35,11 @@ interface Translations {
     welcomeChat: {
         messages: Array<Array<string>>
     }
+    backgroundMusic: {
+        play: string
+        pause: string
+        volume: string
+    }
     components: {
         gratitude: {
             title: string
@@ -275,6 +280,11 @@ const translations: Record<Language, Translations> = {
                 ],
             ],
         },
+        backgroundMusic: {
+            play: "Play Background Music",
+            pause: "Pause Background Music",
+            volume: "Volume",
+        },
         components: {
             gratitude: {
                 title: "Gratitude Journal",
@@ -512,6 +522,11 @@ const translations: Record<Language, Translations> = {
                     "Hãy làm cho khoảnh khắc này có ý nghĩa. Bạn làm được mà. 💪"
                 ],
             ],
+        },
+        backgroundMusic: {
+            play: "Phát Nhạc Nền",
+            pause: "Tạm Dừng Nhạc Nền",
+            volume: "Âm Lượng",
         },
         components: {
             gratitude: {

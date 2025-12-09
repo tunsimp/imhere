@@ -10,6 +10,7 @@ import Tutorial from './components/Tutorial'
 import WelcomeChat from './components/WelcomeChat'
 import NPCAvatar from './components/NPCAvatar'
 import AnimatedBackground from './components/AnimatedBackground'
+import BackgroundMusic from './components/BackgroundMusic'
 import { useTheme } from './hooks/useTheme'
 import { useLanguage } from './hooks/useLanguage'
 
@@ -95,6 +96,7 @@ function App() {
                                 <p className="text-tavern-700 dark:text-tavern-300 mt-1 text-sm sm:text-base md:text-lg">{t.app.subtitle}</p>
                             </div>
                             <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                                <BackgroundMusic />
                                 <button
                                     onClick={toggleLanguage}
                                     className="p-2 rounded-cozy bg-tavern-200 dark:bg-tavern-700 text-tavern-800 dark:text-amber-200 hover:bg-tavern-300 dark:hover:bg-tavern-600 transition-colors flex-shrink-0"
