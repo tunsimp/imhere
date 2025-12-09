@@ -2,128 +2,150 @@ import { useState, useEffect, useRef } from 'react'
 import { ArrowRight, MessageCircle, FastForward } from 'lucide-react'
 import NPCAvatar from './NPCAvatar'
 
-function Tutorial({ onClose }: { onClose: () => void }) {
+type Tab = 'gratitude' | 'schedule' | 'coping' | 'thoughts' | 'export' | 'music'
+
+interface TutorialProps {
+    tab: Tab
+    onClose: () => void
+}
+
+// Tab-specific tutorial content
+const tabTutorials: Record<Tab, Array<{ messages: Array<{ id: number; text: string; type: 'npc' }> }>> = {
+    gratitude: [
+        {
+            messages: [
+                {
+                    id: 0,
+                    text: "Hey, I'm so glad you're here! ✨",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 1,
+                    text: "You know what? Sometimes the best thing we can do is just pause and notice the good stuff. Even the tiny things count.",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 2,
+                    text: "When you're ready, just write down what you're grateful for today. No pressure - it's just between you and me. 😊",
+                    type: 'npc' as const,
+                },
+            ]
+        },
+    ],
+    schedule: [
+        {
+            messages: [
+                {
+                    id: 0,
+                    text: "Hey there! 📅",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 1,
+                    text: "I know life can get overwhelming sometimes. That's why I thought we could plan things out together, one step at a time.",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 2,
+                    text: "Write down what you need to do, and when you finish something, check it off. Trust me, that feeling? It's pretty satisfying! ✅",
+                    type: 'npc' as const,
+                },
+            ]
+        },
+    ],
+    coping: [
+        {
+            messages: [
+                {
+                    id: 0,
+                    text: "Hey, are you doing okay? 💚",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 1,
+                    text: "When things feel heavy, I've got some techniques that might help. Breathing exercises, grounding stuff - things that have helped others.",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 2,
+                    text: "Try them out and see what feels right for you. Everyone's different, and that's totally okay. I'm here with you.",
+                    type: 'npc' as const,
+                },
+            ]
+        },
+    ],
+    thoughts: [
+        {
+            messages: [
+                {
+                    id: 0,
+                    text: "Hey, I see you're here. 📖",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 1,
+                    text: "Sometimes our thoughts can be really loud, you know? When that happens, it helps to write them down - get them out of your head.",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 2,
+                    text: "Then, maybe we can look at them together. Ask yourself: 'Is this thought really true?' Sometimes our minds play tricks on us. 🕵️",
+                    type: 'npc' as const,
+                },
+            ]
+        },
+    ],
+    music: [
+        {
+            messages: [
+                {
+                    id: 0,
+                    text: "Hey! Want to listen to something? 🎵",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 1,
+                    text: "I've got some songs here that might help - whether you need to relax, focus, or just feel a bit better.",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 2,
+                    text: "Just hit 'Another Song' if you want something different. Music can be pretty powerful, you know? 🎶",
+                    type: 'npc' as const,
+                },
+            ]
+        },
+    ],
+    export: [
+        {
+            messages: [
+                {
+                    id: 0,
+                    text: "Hey! 📸",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 1,
+                    text: "Want to save what you've written? Or maybe share it with someone? You can turn your entries into an image right here.",
+                    type: 'npc' as const,
+                },
+                {
+                    id: 2,
+                    text: "It's nice to look back sometimes, you know? See how far you've come. 💫",
+                    type: 'npc' as const,
+                },
+            ]
+        },
+    ],
+}
+
+function Tutorial({ tab, onClose }: TutorialProps) {
     const [currentStep, setCurrentStep] = useState(0)
     const [displayedText, setDisplayedText] = useState('')
     const [isTyping, setIsTyping] = useState(false)
     const typingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-    const conversations = [
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Hey there! 👋 Welcome to your cozy little wellness space!",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "I'm here to help you on your journey. Think of me as your friendly companion! 🌟",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Let me show you around this place. It's got some really neat features!",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "First up, we have the Gratitude Journal! ✨",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "Every day, you can write down things you're grateful for. It's like collecting little moments of joy!",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Research shows this simple practice can really brighten your day. Pretty cool, right? 😊",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Next, there's your Daily Schedule and To-Do List! 📅",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "You can plan out your day with time slots and create tasks. When you complete them, you get that satisfying checkmark! ✅",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "It's like leveling up in a game, but for real life!",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Feeling overwhelmed? Check out the Coping Strategies section! 💚",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "There are lots of techniques you can try - breathing exercises, grounding techniques, and more!",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Think of them as your toolkit for when things get tough. Everyone's different, so find what works for you!",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "Last but not least, there's the Thought Log! 📖",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "When you have a tough thought, you can log it here. Write down what you're thinking and feeling.",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "Then, you can challenge it! Ask yourself: 'Is there evidence this might not be true?' It's like being your own detective! 🕵️",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-        {
-            messages: [
-                {
-                    id: 0,
-                    text: "And that's everything! You're all set to start your wellness journey! 🎉",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 1,
-                    text: "Remember, this is your safe space. Take your time, be kind to yourself, and enjoy exploring!",
-                    type: 'npc' as const,
-                },
-                {
-                    id: 2,
-                    text: "If you ever need help, just click 'Show Tutorial' in the header. I'll be here! 💫",
-                    type: 'npc' as const,
-                },
-            ]
-        },
-    ]
+    const conversations = tabTutorials[tab] || []
 
     const currentConversation = conversations[currentStep]
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
@@ -259,20 +281,22 @@ function Tutorial({ onClose }: { onClose: () => void }) {
                     </div>
                 </div>
 
-                {/* Progress Dots */}
-                <div className="flex justify-center gap-1.5 sm:gap-2 mb-4">
-                    {conversations.map((_, index) => (
-                        <div
-                            key={index}
-                            className={`h-2 rounded-full transition-all duration-300 ${index === currentStep
-                                ? 'bg-amber-500 dark:bg-amber-600 w-6 sm:w-8 scale-110'
-                                : index < currentStep
-                                    ? 'bg-amber-400 dark:bg-amber-500 w-2'
-                                    : 'bg-white bg-opacity-30 dark:bg-white dark:bg-opacity-20 w-2'
-                                }`}
-                        />
-                    ))}
-                </div>
+                {/* Progress Dots - Only show if multiple steps */}
+                {conversations.length > 1 && (
+                    <div className="flex justify-center gap-1.5 sm:gap-2 mb-4">
+                        {conversations.map((_, index) => (
+                            <div
+                                key={index}
+                                className={`h-2 rounded-full transition-all duration-300 ${index === currentStep
+                                    ? 'bg-amber-500 dark:bg-amber-600 w-6 sm:w-8 scale-110'
+                                    : index < currentStep
+                                        ? 'bg-amber-400 dark:bg-amber-500 w-2'
+                                        : 'bg-white bg-opacity-30 dark:bg-white dark:bg-opacity-20 w-2'
+                                    }`}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
@@ -292,7 +316,7 @@ function Tutorial({ onClose }: { onClose: () => void }) {
                                 ? 'Continue'
                                 : currentStep < conversations.length - 1
                                     ? 'Next'
-                                    : "Let's Go!"}
+                                    : 'Got it!'}
                         {isTyping ? (
                             <FastForward className="w-4 h-4 sm:w-5 sm:h-5" />
                         ) : (

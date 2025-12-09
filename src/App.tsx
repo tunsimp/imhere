@@ -17,15 +17,27 @@ type Tab = 'gratitude' | 'schedule' | 'coping' | 'thoughts' | 'export' | 'music'
 function App() {
     const [activeTab, setActiveTab] = useState<Tab>('gratitude')
     const [showTutorial, setShowTutorial] = useState(false)
+    const [tutorialTab, setTutorialTab] = useState<Tab>('gratitude')
     const [showWelcomeChat, setShowWelcomeChat] = useState(false)
     const { isDark, toggleTheme } = useTheme()
 
+    // Check if tutorial for a specific tab has been seen
+    const hasSeenTabTutorial = (tab: Tab): boolean => {
+        return localStorage.getItem(`hasSeenTutorial_${tab}`) === 'true'
+    }
+
+    // Mark tutorial as seen for a specific tab
+    const markTabTutorialSeen = (tab: Tab) => {
+        localStorage.setItem(`hasSeenTutorial_${tab}`, 'true')
+    }
+
+    // Show tutorial when switching to a new tab (if not seen before)
     useEffect(() => {
-        const hasSeenTutorial = localStorage.getItem('hasSeenTutorial')
-        if (!hasSeenTutorial) {
+        if (!hasSeenTabTutorial(activeTab)) {
+            setTutorialTab(activeTab)
             setShowTutorial(true)
         }
-    }, [])
+    }, [activeTab])
 
     useEffect(() => {
         // Show welcome chat after a short delay when page loads
@@ -56,9 +68,10 @@ function App() {
             <div className="relative z-10 min-h-screen bg-gradient-to-br from-parchment-100/5 via-parchment-200/5 to-tavern-100/5 dark:from-tavern-950/15 dark:via-[#2d1a12]/15 dark:to-tavern-950/15">
                 {showTutorial && (
                     <Tutorial
+                        tab={tutorialTab}
                         onClose={() => {
                             setShowTutorial(false)
-                            localStorage.setItem('hasSeenTutorial', 'true')
+                            markTabTutorialSeen(tutorialTab)
                         }}
                     />
                 )}
@@ -88,7 +101,10 @@ function App() {
                                     {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                                 </button>
                                 <button
-                                    onClick={() => setShowTutorial(true)}
+                                    onClick={() => {
+                                        setTutorialTab(activeTab)
+                                        setShowTutorial(true)
+                                    }}
                                     className="btn-game flex items-center gap-2 flex-1 sm:flex-initial text-sm sm:text-base px-3 sm:px-6 py-2 sm:py-3"
                                 >
                                     <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
